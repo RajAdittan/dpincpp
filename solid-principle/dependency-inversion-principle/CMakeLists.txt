@@ -3,4 +3,4 @@ project(dependency-inversion-principle)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(dvp main.cpp)
+add_executable(dependency-inversion main.cpp)
