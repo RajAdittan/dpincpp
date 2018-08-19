@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <vector>
+#include <tuple>
 
 using namespace std;
 
@@ -20,16 +21,19 @@ struct Person {
 
 struct Relationships {
     vector<tuple<Person, Relationship, Person>> relations;
+
+    Relationships() = default;
+
     void add_parent_and_child(const Person& parent, const Person& child) {
-        relations.push_back({parent, Relationship ::parent, child});
-        relations.push_back({child, Relationship ::child, parent});
+        relations.push_back(make_tuple(parent, Relationship::parent, child));
+        relations.push_back(make_tuple(child, Relationship ::child, parent));
     }
 };
 
 struct RelationshipVisitor {
     void visit(Relationships relationships) const {
-        for(auto && relation [first, relative, second]: relationships.relations) {
-            cout << relation->first << "is " << relation->relative << " to " << relation->second << endl;
+        for(auto && relation : relationships.relations) {
+            cout << get<0>(relation).name << "is " << (int)get<1>(relation) << " to " << get<2>(relation).name << endl;
         }
     }
 };
@@ -38,7 +42,7 @@ int main(int argc, char* argv[]) {
     Person parent{"Johnson"};
     Person child1{"Chris"}, child2{"Mathew"};
 
-    Relationships relationships;
+    Relationships relationships = Relationships();
 
     relationships.add_parent_and_child(parent, child1);
     relationships.add_parent_and_child(parent, child2);
