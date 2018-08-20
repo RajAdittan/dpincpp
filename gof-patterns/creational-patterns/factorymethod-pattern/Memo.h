@@ -9,6 +9,7 @@
 #include <chrono>
 #include <ctime>
 #include <ostream>
+#include <functional>
 
 using namespace std;
 
@@ -21,6 +22,9 @@ class Memo {
 public:
 
     static MemoFactory Factory;
+
+    static function<Memo()> factory(string title);
+    static function<Memo()> factory(string title, string text);
 
     const string &getText() const {
         return text;
